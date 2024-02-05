@@ -15,7 +15,7 @@ import {
   editProduct,
 } from "services/api/apiServices";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, setRefetch, setShops } from "features/shop/shopSlice";
+import { addProduct, setShops } from "features/shop/shopSlice";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -29,8 +29,6 @@ const EditProduct = () => {
   const navigate = useNavigate();
   const { editProductDetails } = useSelector((state) => state.shop);
   const { shopId, productId } = useParams();
- 
-  const dispatch = useDispatch();
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
@@ -42,7 +40,6 @@ const EditProduct = () => {
     try {
       const { data } = await editProduct(formData, productId);
       if (data.code === 200) {
-        dispatch(setRefetch(true));
         navigate(`/`);
       }
     } catch (err) {

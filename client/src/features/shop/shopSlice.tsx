@@ -7,7 +7,6 @@ const initialState = {
   products: [],
   editShopDetails: {},
   editProductDetails: {},
-  refetch: true,
 };
 
 export const counterSlice = createSlice({
@@ -29,14 +28,14 @@ export const counterSlice = createSlice({
       const { shopId, data } = action.payload;
 
       const shopIndex = state.shops.findIndex((shop) => shop?._id === shopId);
-  
+
       if (shopIndex !== -1) {
         state.shops[shopIndex] = data;
       }
     },
     initialEditShopDetails: (state, action) => {
       const shopId = action.payload;
-     
+
       const shopIndex = state.shops.findIndex((shop) => shop?._id === shopId);
       // console.log(shop);
 
@@ -45,7 +44,7 @@ export const counterSlice = createSlice({
     },
     initialEditProductDetails: (state, action) => {
       const { shopId, productId } = action.payload;
-   
+
       const shopIndex = state.shops.findIndex((shop) => shop?._id === shopId);
 
       if (shopIndex !== -1) {
@@ -54,9 +53,8 @@ export const counterSlice = createSlice({
         const productIndex = products.findIndex(
           (product) => product?._id === productId
         );
-      
+
         if (productIndex !== -1) {
-     
           state.editProductDetails =
             state.shops[shopIndex].products[productIndex];
         } else {
@@ -65,10 +63,6 @@ export const counterSlice = createSlice({
       } else {
         state.editProductDetails = null;
       }
-    },
-
-    setRefetch: (state, action) => {
-      state.refetch = action.payload;
     },
   },
 });
@@ -81,7 +75,6 @@ export const {
   getProductsByShopId,
   initialEditShopDetails,
   initialEditProductDetails,
-  setRefetch,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

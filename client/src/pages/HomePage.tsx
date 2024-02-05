@@ -4,7 +4,6 @@ import { useAuth } from "context/AuthProvider";
 import {
   initialEditShopDetails,
   setCurrentProduct,
-  setRefetch,
   setShops,
 } from "features/shop/shopSlice";
 import React, { useEffect, useState } from "react";
@@ -14,7 +13,7 @@ import { getShops } from "services/api/apiServices";
 
 const HomePage = () => {
   const { user, logOut } = useAuth();
-  const { shops, refetch } = useSelector((state: any) => state.shop);
+  const { shops } = useSelector((state: any) => state.shop);
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -40,16 +39,13 @@ const HomePage = () => {
         }
       };
 
-      if (refetch) {
-        getShops_();
-        dispatch(setRefetch(false));
-      }
+      getShops_();
     } catch (err) {
       console.log(err);
     } finally {
       setLoading(false);
     }
-  }, [refetch, dispatch]);
+  }, []);
   return (
     <div className=" ">
       <h1 className="text-4xl">Your Shops</h1>
